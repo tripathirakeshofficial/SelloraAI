@@ -37,6 +37,10 @@ The project is designed to demonstrate how modern full-stack applications can be
 ### Platform
 
 - Authentication and authorization
+- Session-based authentication
+- Firebase authentication integration
+- Redis-backed session management
+- HTTP-only session cookies
 - Payment processing
 - Product management
 - Order management
@@ -46,15 +50,32 @@ The project is designed to demonstrate how modern full-stack applications can be
 
 ## 🏗️ Architecture
 
-The application will follow a **microservices architecture**, with individual services responsible for specific business domains such as:
+The application follows a **microservices architecture**, with individual services responsible for specific business domains.
 
-- Authentication
-- Products
-- Orders
-- Payments
-- Digital downloads
+### Current Backend Services
 
-Redis will be used for caching and performance optimization, while AWS will provide the cloud infrastructure for deployment.
+- **Gateway Service**
+  - Central entry point for backend API requests
+  - Routes requests to the appropriate microservice
+
+- **Auth Service**
+  - Firebase ID token verification
+  - User creation and lookup
+  - Session creation and management
+  - Redis-backed server-side sessions
+  - HTTP-only session cookies
+  - Login and logout endpoints
+
+### Shared Infrastructure
+
+- **Redis**
+  - Server-side session storage
+  - Future caching and performance optimization
+
+- **MongoDB**
+  - Auth service database
+
+AWS will provide the cloud infrastructure for deployment as the project evolves.
 
 ## 🎯 Project Goals
 
@@ -64,8 +85,9 @@ This project aims to demonstrate:
 - Microservices architecture
 - Scalable backend design
 - Authentication and authorization
+- Server-side session management
+- Redis integration
 - Payment integration
-- Redis caching
 - Digital product delivery
 - Cloud deployment with AWS
 - Product and order management
@@ -74,4 +96,19 @@ This project aims to demonstrate:
 
 🚧 **In Development**
 
-More details, architecture documentation, setup instructions, API documentation, and deployment information will be added as the project evolves.
+### Completed
+
+- [x] Backend workspace structure
+- [x] Gateway service foundation
+- [x] Auth service foundation
+- [x] MongoDB database connection for Auth Service
+- [x] Firebase authentication integration
+- [x] User model and user persistence
+- [x] Redis integration
+- [x] Server-side session management
+- [x] HTTP-only session cookie
+- [x] Login endpoint
+- [x] Logout endpoint
+- [x] Basic microservices structure
+
+The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.
