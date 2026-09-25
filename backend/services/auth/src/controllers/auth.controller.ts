@@ -9,7 +9,18 @@ export const login = async (req: Request, res: Response) => {
     const { token } = req.body;
 
     // Verify the Firebase token before trusting the user's identity.
-    const decoded = await getAuth(app).verifyIdToken(token);
+    let decoded;
+
+    try {
+      decoded = await getAuth(app).verifyIdToken(token);
+    } catch (error) {
+      console.error("Firebase token verification failed:", error);
+
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
 
     let user = await User.findOne({
       firebaseUid: decoded.uid,
@@ -41,7 +52,7 @@ export const login = async (req: Request, res: Response) => {
     // Use an HTTP-only, strict same-site cookie for the server-side session.
     res.cookie("session", sessionId, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
@@ -67,7 +78,7 @@ export const logout = async (req: Request, res: Response) => {
     }
     res.clearCookie("session", {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
 

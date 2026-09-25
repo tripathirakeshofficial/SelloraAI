@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { cert, initializeApp } from "firebase-admin";
+import { cert, initializeApp } from "firebase-admin/app";
 
 dotenv.config();
 

@@ -72,7 +72,7 @@ The application follows a **microservices architecture**, with individual servic
   - Server-side session storage
   - Future caching and performance optimization
 
-- **PostgreSQL**
+- **MongoDB**
   - Auth service database
 
 AWS will provide the cloud infrastructure for deployment as the project evolves.
@@ -101,7 +101,7 @@ This project aims to demonstrate:
 - [x] Backend workspace structure
 - [x] Gateway service foundation
 - [x] Auth service foundation
-- [x] PostgreSQL database connection for Auth Service
+- [x] MongoDB database connection for Auth Service
 - [x] Firebase authentication integration
 - [x] User model and user persistence
 - [x] Redis integration

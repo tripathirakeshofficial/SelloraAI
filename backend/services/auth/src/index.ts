@@ -20,7 +20,8 @@ app.get("/", (req, res) => {
 
 app.use("/", authRouter);
 
+await connectDb();
+
 app.listen(PORT, () => {
   console.log(`Auth Service Server running on ${PORT}`);
-  connectDb();
 });

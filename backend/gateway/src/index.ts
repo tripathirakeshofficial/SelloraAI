@@ -21,7 +21,12 @@ app.get("/", (req, res) => {
 });
 
 // Route authentication requests through the gateway to the auth service.
-app.use("/api/auth", proxy(process.env.AUTH_SERVICE_URL as string));
+app.use(
+  "/api/auth",
+  proxy(process.env.AUTH_SERVICE_URL as string, {
+    timeout: 10000,
+  }),
+);
 
 app.listen(PORT, () => {
   console.log(`Gateway Server running on ${PORT}`);

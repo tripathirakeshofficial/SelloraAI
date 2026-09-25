@@ -1,5 +1,6 @@
 declare module "*redis.js" {
-  redis: any;
+  import type Redis from "ioredis";
 
+  const redis: Redis;
   export default redis;
 }

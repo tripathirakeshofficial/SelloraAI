@@ -69,6 +69,7 @@ const userSchema = new mongoose.Schema<IUser>(
         type: String,
         unique: true,
         index: true,
+        sparse: true,
       },
       bio: {
         type: String,
