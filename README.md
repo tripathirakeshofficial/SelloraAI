@@ -52,6 +52,14 @@ The project is designed to demonstrate how modern full-stack applications can be
 
 The application follows a **microservices architecture**, with individual services responsible for specific business domains.
 
+### Frontend
+
+- React + Vite
+- TypeScript
+- shadcn/ui
+- Initial marketplace UI structure
+- Login UI
+
 ### Current Backend Services
 
 - **Gateway Service**
@@ -82,6 +90,7 @@ AWS will provide the cloud infrastructure for deployment as the project evolves.
 This project aims to demonstrate:
 
 - Modern full-stack development with TypeScript
+- React-based frontend development
 - Microservices architecture
 - Scalable backend design
 - Authentication and authorization
@@ -110,5 +119,9 @@ This project aims to demonstrate:
 - [x] Login endpoint
 - [x] Logout endpoint
 - [x] Basic microservices structure
+- [x] React + Vite frontend foundation
+- [x] shadcn/ui frontend setup
+- [x] Initial marketplace UI structure
+- [x] Login UI
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.
