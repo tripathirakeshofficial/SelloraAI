@@ -37,10 +37,12 @@ The project is designed to demonstrate how modern full-stack applications can be
 ### Platform
 
 - Authentication and authorization
-- Session-based authentication
 - Firebase authentication integration
+- Google authentication
+- Session-based authentication
 - Redis-backed session management
 - HTTP-only session cookies
+- Authenticated current-user retrieval
 - Payment processing
 - Product management
 - Order management
@@ -59,15 +61,23 @@ The application follows a **microservices architecture**, with individual servic
 - shadcn/ui
 - Initial marketplace UI structure
 - Login UI
+- Firebase Google authentication
+- Axios-based API client
+- Current-user session bootstrap
 
 ### Current Backend Services
 
 - **Gateway Service**
   - Central entry point for backend API requests
   - Routes requests to the appropriate microservice
+  - Handles CORS configuration
+  - Proxies authentication requests to the Auth Service
+  - Provides authenticated current-user endpoint
+  - Validates server-side sessions through authentication middleware
 
 - **Auth Service**
   - Firebase ID token verification
+  - Google authentication integration
   - User creation and lookup
   - Session creation and management
   - Redis-backed server-side sessions
@@ -112,16 +122,24 @@ This project aims to demonstrate:
 - [x] Auth service foundation
 - [x] MongoDB database connection for Auth Service
 - [x] Firebase authentication integration
+- [x] Google authentication integration
 - [x] User model and user persistence
 - [x] Redis integration
 - [x] Server-side session management
 - [x] HTTP-only session cookie
 - [x] Login endpoint
 - [x] Logout endpoint
+- [x] Gateway authentication middleware
+- [x] Authenticated current-user endpoint
+- [x] Gateway-to-Auth Service proxy
+- [x] Frontend-to-Gateway API client
+- [x] Current-user session bootstrap
 - [x] Basic microservices structure
 - [x] React + Vite frontend foundation
 - [x] shadcn/ui frontend setup
 - [x] Initial marketplace UI structure
 - [x] Login UI
+- [x] Firebase Google sign-in flow
+- [x] Frontend environment configuration
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.

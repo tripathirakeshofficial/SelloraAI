@@ -5,6 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import authApi from "@/utils/axios";
+import { auth, provider } from "@/utils/firebase";
+import { signInWithPopup } from "firebase/auth";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +16,20 @@ import logo from "../assets/logo.png";
 function Home() {
   const [openMenu, setOpenMenu] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
+
+  const googleAuth = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+
+      const token = await result.user.getIdToken();
+
+      const response = await authApi.post("/api/auth/login", { token });
+
+      console.log("AUTH API RESPONSE: ", response);
+    } catch (error) {
+      console.log("AUTH API RESPONSE Error: ", error);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-white text-slate-900">
@@ -67,7 +84,11 @@ function Home() {
               SelloraAI
             </DialogTitle>
           </DialogHeader>
-          <Button variant="outline" className="mt-2 w-full gap-2">
+          <Button
+            onClick={googleAuth}
+            variant="outline"
+            className="mt-2 w-full gap-2"
+          >
             <FcGoogle className="w-4 h-4" />
             Continue with Google
           </Button>
