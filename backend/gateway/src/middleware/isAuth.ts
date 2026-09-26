@@ -44,9 +44,11 @@ export const isAuth = async (
 
     next();
   } catch (error) {
+    console.error("isAuth error:", error);
+
     return res.status(500).json({
       success: false,
-      message: `isAuth Error: ${error}`,
+      message: "Internal server error",
     });
   }
 };

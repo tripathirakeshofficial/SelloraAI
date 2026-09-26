@@ -23,9 +23,7 @@ function Home() {
 
       const token = await result.user.getIdToken();
 
-      const response = await authApi.post("/api/auth/login", { token });
-
-      console.log("AUTH API RESPONSE: ", response);
+      await authApi.post("/api/auth/login", { token });
     } catch (error) {
       console.log("AUTH API RESPONSE Error: ", error);
     }
@@ -53,7 +51,12 @@ function Home() {
               SignIn
             </Button>
           </div>
-          <button className="md:hidden" onClick={() => setOpenMenu(!openMenu)}>
+          <button
+            className="md:hidden"
+            onClick={() => setOpenMenu(!openMenu)}
+            aria-label={openMenu ? "Close menu" : "Open menu"}
+            aria-expanded={openMenu}
+          >
             {openMenu ? (
               <X className="h-6 w-6" />
             ) : (
