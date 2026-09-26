@@ -18,7 +18,8 @@
     "express": "^5.2.1",
     "express-http-proxy": "^2.1.2",
     "mongoose": "^9.10.1",
-    "morgan": "^1.12.1"
+    "morgan": "^1.12.1",
+    "ioredis": "^6.0.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",
