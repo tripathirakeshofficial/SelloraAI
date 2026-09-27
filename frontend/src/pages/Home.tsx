@@ -24,8 +24,10 @@ function Home() {
       const token = await result.user.getIdToken();
 
       await authApi.post("/api/auth/login", { token });
+
+      setModelOpen(false);
     } catch (error) {
-      console.log("AUTH API RESPONSE Error: ", error);
+      console.error("AUTH API RESPONSE Error: ", error);
     }
   };
 
@@ -46,14 +48,14 @@ function Home() {
           <div className="hidden items-center gap-3 md:flex">
             <Button
               className="bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
-              onClick={() => setModelOpen(!modelOpen)}
+              onClick={() => setModelOpen((prev) => !prev)}
             >
               SignIn
             </Button>
           </div>
           <button
             className="md:hidden"
-            onClick={() => setOpenMenu(!openMenu)}
+            onClick={() => setOpenMenu((prev) => !prev)}
             aria-label={openMenu ? "Close menu" : "Open menu"}
             aria-expanded={openMenu}
           >
@@ -68,7 +70,7 @@ function Home() {
           <div className="flex flex-col gap-4 border-t border-slate-100 px-4 py-4 sm:px-6 md:hidden">
             <Button
               className="w-full bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
-              onClick={() => setModelOpen(!modelOpen)}
+              onClick={() => setModelOpen((prev) => !prev)}
             >
               SignIn
             </Button>
