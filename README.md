@@ -10,45 +10,9 @@ The project is designed to demonstrate how modern full-stack applications can be
 - 🔷 TypeScript
 - 🎨 shadcn/ui
 - ⚡ Redis
-- 🏗️ Microservices Architecture
+- 🗂️ Microservices Architecture
 - ☁️ AWS
-- 🔐 Authentication & Authorization
-- 💳 Payment Integration
-- 🛒 Digital Product Marketplace
-- 📦 Product & Order Management
-
-## ✨ Core Features
-
-### Customers
-
-- Browse digital products
-- View product details
-- Purchase products
-- Download purchased products
-- Manage orders
-
-### Sellers
-
-- Create and manage digital products
-- Manage product information and pricing
-- Manage sales
-- Track orders
-
-### Platform
-
-- Authentication and authorization
-- Firebase authentication integration
-- Google authentication
-- Session-based authentication
-- Redis-backed session management
-- HTTP-only session cookies
-- Authenticated current-user retrieval
-- Payment processing
-- Product management
-- Order management
-- Redis caching
-- Microservices-based backend
-- AWS cloud deployment
+- 🔗 Authentication & Authorization
 
 ## 🏗️ Architecture
 
@@ -64,6 +28,10 @@ The application follows a **microservices architecture**, with individual servic
 - Firebase Google authentication
 - Axios-based API client
 - Current-user session bootstrap
+- Redux Toolkit + React Redux state management
+- Role-based routing with React Router
+- Centralized user domain types
+- Admin and Partner route foundations
 
 ### Current Backend Services
 
@@ -141,5 +109,10 @@ This project aims to demonstrate:
 - [x] Login UI
 - [x] Firebase Google sign-in flow
 - [x] Frontend environment configuration
+- [x] Redux state management
+- [x] Current-user state integration with Redux
+- [x] Role-based frontend routing
+- [x] Admin and Partner route foundations
+- [x] Centralized frontend user types
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.
