@@ -32,6 +32,9 @@ The application follows a **microservices architecture**, with individual servic
 - Role-based routing with React Router
 - Centralized user domain types
 - Admin and Partner route foundations
+- User profile display with avatar and name
+- Frontend logout flow
+- Toast notifications
 
 ### Current Backend Services
 
@@ -114,5 +117,8 @@ This project aims to demonstrate:
 - [x] Role-based frontend routing
 - [x] Admin and Partner route foundations
 - [x] Centralized frontend user types
+- [x] User profile display with avatar and name
+- [x] Frontend logout flow
+- [x] Toast notifications
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.

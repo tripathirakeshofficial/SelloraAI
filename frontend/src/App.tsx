@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
 import { useGetCurrentUser } from "./hooks/useGetCurrentUser";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
@@ -20,32 +21,35 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          user?.role === "admin" ? <Navigate to="/admin" replace /> : <Home />
-        }
-      />
-      <Route
-        path="/admin"
-        element={
-          user?.role === "admin" ? <Admin /> : <Navigate to="/" replace />
-        }
-      />
-      <Route
-        path="/partner"
-        element={
-          user?.role === "partner" ? (
-            <Partner />
-          ) : user?.role === "admin" ? (
-            <Navigate to="/admin" replace />
-          ) : (
-            <Navigate to="/" replace />
-          )
-        }
-      />
-    </Routes>
+    <>
+      <Toaster />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            user?.role === "admin" ? <Navigate to="/admin" replace /> : <Home />
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            user?.role === "admin" ? <Admin /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/partner"
+          element={
+            user?.role === "partner" ? (
+              <Partner />
+            ) : user?.role === "admin" ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+      </Routes>
+    </>
   );
 }
 

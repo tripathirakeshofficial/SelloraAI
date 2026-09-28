@@ -5,17 +5,26 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import UserProfile from "@/components/UserProfile";
+import type { AppDispatch, RootState } from "@/redux/store";
+import { logoutUser, setUser } from "@/redux/userSlice";
 import authApi from "@/utils/axios";
 import { auth, provider } from "@/utils/firebase";
 import { signInWithPopup } from "firebase/auth";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 import logo from "../assets/logo.png";
 
 function Home() {
   const [openMenu, setOpenMenu] = useState(false);
-  const [modelOpen, setModelOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const user = useSelector((state: RootState) => state.user.user);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const googleAuth = async () => {
     try {
@@ -23,11 +32,28 @@ function Home() {
 
       const token = await result.user.getIdToken();
 
-      await authApi.post("/api/auth/login", { token });
+      const response = await authApi.post("/api/auth/login", { token });
 
-      setModelOpen(false);
+      dispatch(setUser(response.data.user));
+      setModalOpen(false);
+      toast.success("Login Successfully");
     } catch (error) {
       console.error("AUTH API RESPONSE Error: ", error);
+      toast.error("Login Failed");
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await authApi.post("/api/auth/logout");
+
+      if (response.data.success) {
+        dispatch(logoutUser());
+        toast.success("Logout Successfully");
+      }
+    } catch (error) {
+      console.error("LOGOUT ERROR: ", error);
+      toast.error("Logout Failed");
     }
   };
 
@@ -46,12 +72,26 @@ function Home() {
             </span>
           </div>
           <div className="hidden items-center gap-3 md:flex">
-            <Button
-              className="bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
-              onClick={() => setModelOpen((prev) => !prev)}
-            >
-              SignIn
-            </Button>
+            {user ? (
+              <div className="flex items-center gap-3">
+                <UserProfile name={user.name} />
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="gap-1.5"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
+                onClick={() => setModalOpen((prev) => !prev)}
+              >
+                SignIn
+              </Button>
+            )}
           </div>
           <button
             className="md:hidden"
@@ -68,16 +108,30 @@ function Home() {
         </div>
         {openMenu && (
           <div className="flex flex-col gap-4 border-t border-slate-100 px-4 py-4 sm:px-6 md:hidden">
-            <Button
-              className="w-full bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
-              onClick={() => setModelOpen((prev) => !prev)}
-            >
-              SignIn
-            </Button>
+            {user ? (
+              <>
+                <UserProfile name={user.name} />
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="w-full gap-1.5"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button
+                className="w-full bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
+                onClick={() => setModalOpen((prev) => !prev)}
+              >
+                SignIn
+              </Button>
+            )}
           </div>
         )}
       </header>
-      <Dialog open={modelOpen} onOpenChange={setModelOpen}>
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader className="items-center text-center">
             <img
