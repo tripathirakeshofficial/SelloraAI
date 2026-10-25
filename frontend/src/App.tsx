@@ -1,11 +1,14 @@
+import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "./components/ui/sonner";
 import { useGetCurrentUser } from "./hooks/useGetCurrentUser";
-import Admin from "./pages/Admin";
-import Home from "./pages/Home";
-import Partner from "./pages/Partner";
 import type { RootState } from "./redux/store";
+
+const Home = lazy(() => import("./pages/Home"));
+const Admin = lazy(() => import("./pages/Admin"));
+const Partner = lazy(() => import("./pages/Partner"));
 
 function App() {
   useGetCurrentUser();
@@ -13,42 +16,46 @@ function App() {
   const { user, loading } = useSelector((state: RootState) => state.user);
 
   if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent" />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
     <>
       <Toaster />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user?.role === "admin" ? <Navigate to="/admin" replace /> : <Home />
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            user?.role === "admin" ? <Admin /> : <Navigate to="/" replace />
-          }
-        />
-        <Route
-          path="/partner"
-          element={
-            user?.role === "partner" ? (
-              <Partner />
-            ) : user?.role === "admin" ? (
-              <Navigate to="/admin" replace />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-      </Routes>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              user?.role === "admin" ? (
+                <Navigate to="/admin" replace />
+              ) : user?.role === "partner" ? (
+                <Navigate to="/partner" replace />
+              ) : (
+                <Home />
+              )
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              user?.role === "admin" ? <Admin /> : <Navigate to="/" replace />
+            }
+          />
+          <Route
+            path="/partner"
+            element={
+              user?.role === "partner" ? (
+                <Partner />
+              ) : user?.role === "admin" ? (
+                <Navigate to="/admin" replace />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+        </Routes>
+      </Suspense>
     </>
   );
 }
