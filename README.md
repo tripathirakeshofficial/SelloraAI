@@ -2,7 +2,7 @@
 
 A scalable digital product marketplace where users can browse, purchase, and download digital products, while sellers can manage their products and sales.
 
-The project is designed to demonstrate how modern full-stack applications can be structured using **microservices architecture**, caching, cloud infrastructure, authentication, payments, and scalable backend services.
+The project demonstrates how modern full-stack applications can be structured using **microservices architecture**, caching, cloud infrastructure, authentication, payments, and scalable backend services.
 
 ## 🚀 Tech Stack
 
@@ -35,6 +35,8 @@ The application follows a **microservices architecture**, with individual servic
 - User profile display with avatar and name
 - Frontend logout flow
 - Toast notifications
+- Lazy-loaded routes and shared loading components
+- Optimized frontend dependencies and bundle loading
 
 ### Current Backend Services
 
@@ -43,26 +45,34 @@ The application follows a **microservices architecture**, with individual servic
   - Routes requests to the appropriate microservice
   - Handles CORS configuration
   - Proxies authentication requests to the Auth Service
-  - Provides authenticated current-user endpoint
+  - Provides an authenticated current-user endpoint
   - Validates server-side sessions through authentication middleware
+  - Validates current account status through the Auth Service
+  - Handles invalid and expired sessions
+  - Uses internal-secret verification for gateway-to-auth communication
 
 - **Auth Service**
   - Firebase ID token verification
   - Google authentication integration
   - User creation and lookup
+  - Account activation status checks
   - Session creation and management
   - Redis-backed server-side sessions
   - HTTP-only session cookies
   - Login and logout endpoints
+  - Internal session-validation endpoint
+  - Rejects inactive accounts during login and session validation
 
 ### Shared Infrastructure
 
 - **Redis**
   - Server-side session storage
-  - Future caching and performance optimization
+  - Session expiration using TTL
+  - Foundation for future caching and performance optimization
 
 - **MongoDB**
-  - Auth service database
+  - Auth Service database
+  - User persistence and account status management
 
 AWS will provide the cloud infrastructure for deployment as the project evolves.
 
@@ -81,6 +91,8 @@ This project aims to demonstrate:
 - Digital product delivery
 - Cloud deployment with AWS
 - Product and order management
+- Frontend performance optimization
+- Secure service-to-service communication
 
 ## 📌 Project Status
 
@@ -90,7 +102,7 @@ This project aims to demonstrate:
 
 - [x] Backend workspace structure
 - [x] Gateway service foundation
-- [x] Auth service foundation
+- [x] Auth Service foundation
 - [x] MongoDB database connection for Auth Service
 - [x] Firebase authentication integration
 - [x] Google authentication integration
@@ -120,5 +132,14 @@ This project aims to demonstrate:
 - [x] User profile display with avatar and name
 - [x] Frontend logout flow
 - [x] Toast notifications
+- [x] Lazy-loaded frontend routes
+- [x] Shared loading components
+- [x] Frontend dependency and bundle optimizations
+- [x] Inactive-account checks during login
+- [x] Internal-secret protection for session validation
+- [x] Gateway-to-Auth Service account validation
+- [x] Invalid Redis session handling
+- [x] Session cookie cleanup for invalid sessions
+- [x] Gateway, Auth Service, and frontend lint/build checks
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.
