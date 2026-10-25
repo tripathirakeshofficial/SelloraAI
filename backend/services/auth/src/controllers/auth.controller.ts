@@ -34,6 +34,14 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
+    // Prevent inactive accounts from creating authenticated sessions.
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account is inactive. Please contact support.",
+      });
+    }
+
     const sessionId = crypto.randomUUID();
 
     // Store session state server-side; the browser only receives an opaque session ID.
@@ -62,9 +70,70 @@ export const login = async (req: Request, res: Response) => {
       user,
     });
   } catch (error) {
+    console.error("Login error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Login failed",
+    });
+  }
+};
+
+export const validateSession = async (req: Request, res: Response) => {
+  try {
+    // Allow only requests authenticated by the gateway's internal secret.
+    const internalSecret = process.env.INTERNAL_AUTH_SECRET;
+
+    if (
+      !internalSecret ||
+      req.headers["x-internal-auth-secret"] !== internalSecret
+    ) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const { userId } = req.body;
+
+    if (!userId || typeof userId !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Valid user ID is required",
+      });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account is inactive",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user: {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Session validation error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Session validation failed",
     });
   }
 };

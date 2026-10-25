@@ -2,7 +2,7 @@
 
 A scalable digital product marketplace where users can browse, purchase, and download digital products, while sellers can manage their products and sales.
 
-The project is designed to demonstrate how modern full-stack applications can be structured using **microservices architecture**, caching, cloud infrastructure, authentication, payments, and scalable backend services.
+The project demonstrates how modern full-stack applications can be structured using **microservices architecture**, caching, cloud infrastructure, authentication, payments, and scalable backend services.
 
 ## 🚀 Tech Stack
 
@@ -10,45 +10,9 @@ The project is designed to demonstrate how modern full-stack applications can be
 - 🔷 TypeScript
 - 🎨 shadcn/ui
 - ⚡ Redis
-- 🏗️ Microservices Architecture
+- 🗂️ Microservices Architecture
 - ☁️ AWS
-- 🔐 Authentication & Authorization
-- 💳 Payment Integration
-- 🛒 Digital Product Marketplace
-- 📦 Product & Order Management
-
-## ✨ Core Features
-
-### Customers
-
-- Browse digital products
-- View product details
-- Purchase products
-- Download purchased products
-- Manage orders
-
-### Sellers
-
-- Create and manage digital products
-- Manage product information and pricing
-- Manage sales
-- Track orders
-
-### Platform
-
-- Authentication and authorization
-- Firebase authentication integration
-- Google authentication
-- Session-based authentication
-- Redis-backed session management
-- HTTP-only session cookies
-- Authenticated current-user retrieval
-- Payment processing
-- Product management
-- Order management
-- Redis caching
-- Microservices-based backend
-- AWS cloud deployment
+- 🔗 Authentication & Authorization
 
 ## 🏗️ Architecture
 
@@ -64,6 +28,15 @@ The application follows a **microservices architecture**, with individual servic
 - Firebase Google authentication
 - Axios-based API client
 - Current-user session bootstrap
+- Redux Toolkit + React Redux state management
+- Role-based routing with React Router
+- Centralized user domain types
+- Admin and Partner route foundations
+- User profile display with avatar and name
+- Frontend logout flow
+- Toast notifications
+- Lazy-loaded routes and shared loading components
+- Optimized frontend dependencies and bundle loading
 
 ### Current Backend Services
 
@@ -72,26 +45,34 @@ The application follows a **microservices architecture**, with individual servic
   - Routes requests to the appropriate microservice
   - Handles CORS configuration
   - Proxies authentication requests to the Auth Service
-  - Provides authenticated current-user endpoint
+  - Provides an authenticated current-user endpoint
   - Validates server-side sessions through authentication middleware
+  - Validates current account status through the Auth Service
+  - Handles invalid and expired sessions
+  - Uses internal-secret verification for gateway-to-auth communication
 
 - **Auth Service**
   - Firebase ID token verification
   - Google authentication integration
   - User creation and lookup
+  - Account activation status checks
   - Session creation and management
   - Redis-backed server-side sessions
   - HTTP-only session cookies
   - Login and logout endpoints
+  - Internal session-validation endpoint
+  - Rejects inactive accounts during login and session validation
 
 ### Shared Infrastructure
 
 - **Redis**
   - Server-side session storage
-  - Future caching and performance optimization
+  - Session expiration using TTL
+  - Foundation for future caching and performance optimization
 
 - **MongoDB**
-  - Auth service database
+  - Auth Service database
+  - User persistence and account status management
 
 AWS will provide the cloud infrastructure for deployment as the project evolves.
 
@@ -110,6 +91,8 @@ This project aims to demonstrate:
 - Digital product delivery
 - Cloud deployment with AWS
 - Product and order management
+- Frontend performance optimization
+- Secure service-to-service communication
 
 ## 📌 Project Status
 
@@ -119,7 +102,7 @@ This project aims to demonstrate:
 
 - [x] Backend workspace structure
 - [x] Gateway service foundation
-- [x] Auth service foundation
+- [x] Auth Service foundation
 - [x] MongoDB database connection for Auth Service
 - [x] Firebase authentication integration
 - [x] Google authentication integration
@@ -141,5 +124,22 @@ This project aims to demonstrate:
 - [x] Login UI
 - [x] Firebase Google sign-in flow
 - [x] Frontend environment configuration
+- [x] Redux state management
+- [x] Current-user state integration with Redux
+- [x] Role-based frontend routing
+- [x] Admin and Partner route foundations
+- [x] Centralized frontend user types
+- [x] User profile display with avatar and name
+- [x] Frontend logout flow
+- [x] Toast notifications
+- [x] Lazy-loaded frontend routes
+- [x] Shared loading components
+- [x] Frontend dependency and bundle optimizations
+- [x] Inactive-account checks during login
+- [x] Internal-secret protection for session validation
+- [x] Gateway-to-Auth Service account validation
+- [x] Invalid Redis session handling
+- [x] Session cookie cleanup for invalid sessions
+- [x] Gateway, Auth Service, and frontend lint/build checks
 
 The project is actively under development. Architecture, services, APIs, testing, deployment, and other features will be added as development progresses.

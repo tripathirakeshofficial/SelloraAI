@@ -11,17 +11,27 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = (process.env.FRONTEND_URL ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      // Allow requests without an Origin header, such as server-to-server calls.
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+      }
+    },
     credentials: true,
   }),
 );
 
 app.use(express.json());
-
 app.use(cookieParser());
-
 app.use(morgan("dev"));
 
 const PORT = process.env.PORT;
